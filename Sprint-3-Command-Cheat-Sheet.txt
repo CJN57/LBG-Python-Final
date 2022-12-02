@@ -1,0 +1,27 @@
+----------------------DOCKER----------------------
+sudo apt-get update
+sudo apt install curl -y
+curl https://get.docker.com | sudo bash
+sudo usermod -aG docker $(whoami)
+sudo usermod -aG docker jenkins
+
+
+----------------------KUBECTL---------------------- ONLY COUNTS FOR CURRENT USER
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+chmod +x kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+
+----------------------CREATE-CLUSTER----------------------
+gcloud init
+gcloud container clusters create piers-cluster --num-nodes=2 --machine-type=n1-standard-1 --zone=europe-west2-a
+
+
+----------------------CONFIGURE-COMMANDS---------------------- ONLY COUNTS FOR CURRENT USER
+gcloud container clusters get-credentials piers-cluster --zone=europe-west2-a
+gcloud auth configure-docker
+
+
+----------------------GIT-SSH-KEY---------------------- ONLY COUNTS FOR CURRENT USER
+ssh-keygen -t rsa -f ~/.ssh/id_rsa <<< y
+cat ~/.ssh/id_rsa.pub

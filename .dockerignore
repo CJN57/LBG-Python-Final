@@ -1,0 +1,11 @@
+/kubernetes/
+/webdrivers/
+/.git/
+
+.dockerignore
+Dockerfile
+*.test.py
+LICENSE
+*.md
+*.txt
+!requirements.txt
